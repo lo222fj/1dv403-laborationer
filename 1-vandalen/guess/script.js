@@ -36,7 +36,6 @@ window.onload = function() {
 			if (number < secret) {
 				return [false, "Det hemliga talet är högre"];
 			};
-
 		};
 
 		console.log(secret);
