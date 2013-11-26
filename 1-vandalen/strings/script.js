@@ -4,8 +4,12 @@ window.onload = function() {
 
 	// I denna funktion ska du skriva koden för att hantera "spelet"
 	var convertString = function(str) {
-		try {
+		
 			var answer = [];
+
+			if (str == "") {
+				throw new Error("Du måste mata in ett ord");
+			}
 
 			console.log(answer);
 			for (var index = 0; index < str.length; index++) {
@@ -24,10 +28,6 @@ window.onload = function() {
 			// Returnera den konverterade strängen.
 			// Vid fel, kasta ett undantag med ett meddelande till användaren.
 			return answerString;
-
-		} catch(error) {
-			console.log("Ett fel uppstod. Tänk på att du måste mata in bokstäver!");
-		}
 
 	};
 	// ------------------------------------------------------------------------------
