@@ -3,51 +3,46 @@
 window.onload = function() {
 
 	var birthday = function(date) {
+// Din kod här.
 
 		console.log(date);
 
+		//Ska hantera att inmatning är korrekt
 		var dateTypeBirthday = new Date(date);
 
 		if (isNaN(dateTypeBirthday.valueOf())) {
 			throw new Error("Skriv in ett datum på formen 'ÅÅÅÅ-MM-DD'");
 		};
-		console.log("Före function");
 
-		function getNextBirthday() {
+		//Tar ut månad och dag från födelsedagen
+		var birthMonth = dateTypeBirthday.getMonth();
+		var birthDate = dateTypeBirthday.getDate();
 
-			console.log("Först i getNextBirthday");
+		//Tar fram datumobjekt för aktuellt tid utan klockslag
+		var newDate = new Date();
+		var thisDate = newDate.getDate();
+		var thisMonth = newDate.getMonth();
+		var thisYear = newDate.getFullYear();
+		var today = new Date(thisYear, thisMonth, thisDate);
+		
+		var nextYear = thisYear + 1;
 
-			var birthYear = dateTypeBirthday.getFullYear();
-			var birthMonth = dateTypeBirthday.getMonth();
-			var birthDate = dateTypeBirthday.getDate();
-			var newDate = new Date();
-			//Datum när scriptet körs, aktuellt
-
-			var thisYear = newDate.getFullYear();
-			var nextYear = thisYear + 1;
-
-			var birthdayThisYear = new Date(thisYear, birthMonth, birthDate);
-			var birthdayNextYear = new Date(nextYear, birthMonth, birthDate);
-			var nextBirthday = birthdayThisYear;
-
-			console.log(birthdayThisYear);
-			console.log(birthdayNextYear);
-			console.log(newDate - birthdayThisYear);
-			console.log(newDate - birthdayNextYear);
-
-			if ((newDate - birthdayThisYear) > 0) {
-				nextBirthday = birthdayNextYear;
-
-				return nextBirthday;
-			};
-			var nextBirthday = getNextBirthday();
-console.log(nextBirthday);
+		//Tar fram när nästa födelsedag inträffar
+		var birthdayThisYear = new Date(thisYear, birthMonth, birthDate);
+		var birthdayNextYear = new Date(nextYear, birthMonth, birthDate);
+		var nextBirthday = birthdayThisYear;
+		
+		if (today > birthdayThisYear) {
+			nextBirthday = birthdayNextYear;
 		}
 		
+		//Räknar ut återstående dagar till nästa födelsedag
+		var remainingDays = (nextBirthday - today)/1000/60/60/24;
+		 
+		
+		return remainingDays;
 
-		//return nextBirthday-newDate;
-		// Din kod här.
-
+		
 	};
 	// ------------------------------------------------------------------------------
 
