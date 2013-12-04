@@ -1,7 +1,7 @@
 "use strict";
 
 var makePerson = function(persArr) {
-	console.log(persArr);
+	//console.log(persArr);
 	var result = {};
 	// Din kod här...
 
@@ -31,9 +31,9 @@ var makePerson = function(persArr) {
 	var averageAge;
 
 	for ( i = 0; i < persArr.length; i++) {
-		console.log("i for birthday");
+//		console.log("i for birthday");
 		age = persArr[i].age;
-		console.log(age);
+	//	console.log(age);
 		ages.push(age);
 	}
 	//Maxålder
@@ -51,7 +51,7 @@ var makePerson = function(persArr) {
 	averageAge = Math.round(ages.reduce(function(x, y) {
 		return x + y
 	}, 0) / ages.length);
-	console.log(averageAge);
+	//console.log(averageAge);
 
 	//Objekt att returnera
 	var objekt = {
@@ -63,3 +63,6 @@ var makePerson = function(persArr) {
 
 	return objekt;
 }
+var data= [{name: "Lotta Onsö", age: 46}, {name: "Jonas Isberg", age: 36}, {name: "Heffa", age: 5}];
+var result = makePerson(data);
+console.log(result);
