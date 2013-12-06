@@ -1,5 +1,8 @@
 html {
-	background-color: maroon;
+	height: 100%;
+	background-image: url(katt_solnedg.jpg);
+	background-size: cover;
+	background-repeat:no-repeat;
 }
 #container{
 	max-width: 960px;
@@ -11,7 +14,7 @@ html {
 	border: green solid 2px;
 	padding: 0.5em;
 }
-#messageInput {
+#messageInput, #messageOutput {
 	background-color: #fff;
 	padding: 0.5em;
 	}
