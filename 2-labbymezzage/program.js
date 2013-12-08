@@ -4,65 +4,64 @@
 var MessageBoard = {
 
 	messages : [],
-	renderMessages : function() {
 
+	renderMessages : function() {
+		//tar bort tidigare meddelanden
+		var outputDiv = document.getElementById("messageOutput");
+		outputDiv.innerHTML = "";
+
+		//loopar igenom meddelanden och anropar renderMessage för varje objekt
+		var i, counter;
+		for ( i = 0; i < MessageBoard.messages.length; i += 1)
+
+			MessageBoard.renderMessage(i);
 	},
+	//skriver ut ett meddelande
+	renderMessage : function(messageID) {
+		
+		var outputDiv = document.getElementById("messageOutput");//skapar en p-tag, lägger den som en child till diven som håller meddelanden
+		var text = document.createElement("p");
+		outputDiv.appendChild(text);
+		var time = MessageBoard.messages[messageID].getDate().toLocaleTimeString();
+		text.innerHTML = MessageBoard.messages[messageID].getHTMLText() + " " +time;//skjuter in texten som finns i meddelandeobjektet i p-taggen
+		
+		var counterDiv =document.getElementById("counter");
+		var couterDivText=document.createTextNode("Antal meddelanden: "+ MessageBoard.messages.length);
+		counterDiv.appendChild(couterDivText);
+	}, 
+
 	init : function(e) {
+		var submit = document.getElementById("saveMessage");
+		submit.onclick = MessageBoard.createNewMessage;
 
 	},
 	createNewMessage : function() {
-		//var message = document.getElementById("saveMessage");
+		var text;
+		var message = {};
 
-		//var mess = new Message("hej hopp", new Date());
-		//this.messages.push(mess);
-		//var mess = new Message("HEJ HOPP", new Date());
-		//this.messages.push(mess);
-		//alert(MessageBoard.messages);
-		//alert(MessageBoard.messages[1].getText());
+		text = document.getElementById("writeMessage").value;
+		//console.log(text);
+		message = new Message(text, new Date());
+		//console.log(message.toString());
+		MessageBoard.messages.push(message);
+
+		var textInput = document.getElementById("writeMessage");
+		textInput.value = "";
+		MessageBoard.renderMessages();
+
 	},
-	renderMessage : function() {
-
-	}, //skriver ut ett meddelande
-	renderMessages : function() {
-
-	},//loopar igenom meddelanden och anropar renderMessage för varje objekt
 }
 
-window.onload = function() {
-	debugger;
+window.onload = function() { debugger;
 	MessageBoard.init();
-	
-	var submit = document.getElementById("saveMessage");
-	
-	submit.onclick = function(){
-		var text;
-		var message={};
-		
-		text = document.getElementById("writeMessage").value;
-		console.log(text);
-		message = new Message(text, new Date());
-		console.log(message);
-		MessageBoard.messages.push(message);
-		console.log("FÖRE");
-		console.log(MessageBoard.messages);
-		console.log("EFTER");
-		
-	};
-	
-	
-	//alert(text);
 
 };
 
 /*
- window.onload = function() {
- motor.init();
- };
- var motor = {};
- motor.init = function() {
- var newMessage = new Message("plupp", new Date());
- alert(newMessage);
- alert(newMessage.getText());
- newMessage.setText("Jonas är en mupp");
- alert(newMessage);
+ //var mess = new Message("hej hopp", new Date());
+ //this.messages.push(mess);
+ //var mess = new Message("HEJ HOPP", new Date());
+ //this.messages.push(mess);
+ //alert(MessageBoard.messages);
+ //alert(MessageBoard.messages[1].getText());
  }*/

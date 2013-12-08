@@ -25,3 +25,7 @@ textarea{
 h1{
 	color: silver;
 }
+p{
+	border: inset 0.1em silver;
+	font-family: monospace;
+}

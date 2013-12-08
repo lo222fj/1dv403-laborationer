@@ -1,5 +1,5 @@
 function Message(message, date) {
-	console.log(message + date);
+	//console.log(message + date);
 	this.getText = function() {
 		//console.log("this.getText " + message + date);
 		return message;
@@ -25,8 +25,14 @@ function Message(message, date) {
 
 Message.prototype.toString = function() {
 	//alert(this.date.getHours()+" "+this.date.getMinutes() +" "+this.date.getSeconds());
-	return this.getText() + " \(" + this.getDate() + " \)";
+	return this.getText() + " \(" + this.getDate('hh, mm, ss') + " \)";
 }
-Message.getHTMLText = function() {
-	message = message.replace(/\n/g, '<br />');
+Message.prototype.getHTMLText = function() {
+	var messageText = this.getText();
+	return messageText.replace(/\n/g, '<br />');
+	//message = message.replace(/\n/g, '<br />');
 }
+
+//Message.prototype.getDateText = function(){
+	//var 
+//}
