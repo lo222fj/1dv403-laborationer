@@ -31,8 +31,16 @@ textarea{
 h1{
 	color: silver;
 }
-p{
+article{
 	border: inset 0.1em silver;
 	font-family: monospace;
 	padding: 0.5em;
+	overflow: auto;
+}
+p{
+	width: 60%;
+}
+span, img{
+	display: block;
+	float: right;
 }

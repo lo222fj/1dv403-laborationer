@@ -18,25 +18,51 @@ var MessageBoard = {
 	},
 	//skriver ut ett meddelande
 	renderMessage : function(messageID) {
-		//skapar en p-tag, lägger den som en child till diven som håller meddelanden
-		
+
 		var outputDiv = document.getElementById("messageOutput");
-		var text = document.createElement("p");
-		outputDiv.appendChild(text);
-		var time = MessageBoard.messages[messageID].getDate().toLocaleTimeString();
-		//skjuter in texten som finns i meddelandeobjektet i p-taggen
-		text.innerHTML = MessageBoard.messages[messageID].getHTMLText() + " " +time;
+
+		//skapar en article som ska innehålla varje meddelande och lägger den i div för alla meddelanden
+		var eachMessage = document.createElement("article");
+		outputDiv.appendChild(eachMessage);
+
+		//gör ta-bort-knapp...
+		var imgRemove = document.createElement("img");
+		imgRemove.setAttribute("src", "remove.png");
+		imgRemove.alt = "Close";
+		//...och skjuter in den i en a-tag
+		var a = document.createElement("a");
+		a.href = "#";
+		a.appendChild(imgRemove);
+		eachMessage.appendChild(a);
 		
-		var counterDiv =document.getElementById("counter");
-		counterDiv.innerHTML = "Antal meddelanden: " +MessageBoard.messages.length;
+		
+//HÄR SKA DU FORTSÄTTA! GÖR FUNKTIONEN SOM TAR BORT MEDDELANDE!
+		//imgRemove.onclick = function() {
+			//MessageBoard.removeMessage(messageID);
+		//}
+		
+		var messageText = document.createElement("p");
+		messageText.innerHTML = MessageBoard.messages[messageID].getHTMLText();
+		eachMessage.appendChild(messageText);
+
+		var timeOutprint = document.createElement("span");
+		var time = MessageBoard.messages[messageID].getDate().toLocaleTimeString();
+		timeOutprint.innerHTML = time;
+		eachMessage.appendChild(timeOutprint);
+
+		//skjuter in texten som finns i meddelandeobjektet i p-taggen
+
+		var counterDiv = document.getElementById("counter");
+		counterDiv.innerHTML = "Antal meddelanden: " + MessageBoard.messages.length;
 		//var couterDivText=document.createTextNode("Antal meddelanden: "+ MessageBoard.messages.length);
 		//counterDiv.appendChild(couterDivText);
-	}, 
+	},
 
 	init : function(e) {
 		var submit = document.getElementById("saveMessage");
 		submit.onclick = MessageBoard.createNewMessage;
 
+		document.getElementById("writeMessage").focus();
 	},
 	createNewMessage : function() {
 		var text;
@@ -50,8 +76,10 @@ var MessageBoard = {
 
 		var textInput = document.getElementById("writeMessage");
 		textInput.value = "";
+
+		document.getElementById("writeMessage").focus();
 		//MessageBoard.renderMessages(); VÄLJ DENNA OCH KOMMATERA BORT NÄSTA RAD FÖR ATT GÅ VIA MESSAGES
-		MessageBoard.renderMessage(MessageBoard.messages.length-1);
+		MessageBoard.renderMessage(MessageBoard.messages.length - 1);
 	},
 }
 
