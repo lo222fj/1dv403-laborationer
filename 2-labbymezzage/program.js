@@ -18,16 +18,19 @@ var MessageBoard = {
 	},
 	//skriver ut ett meddelande
 	renderMessage : function(messageID) {
+		//skapar en p-tag, lägger den som en child till diven som håller meddelanden
 		
-		var outputDiv = document.getElementById("messageOutput");//skapar en p-tag, lägger den som en child till diven som håller meddelanden
+		var outputDiv = document.getElementById("messageOutput");
 		var text = document.createElement("p");
 		outputDiv.appendChild(text);
 		var time = MessageBoard.messages[messageID].getDate().toLocaleTimeString();
-		text.innerHTML = MessageBoard.messages[messageID].getHTMLText() + " " +time;//skjuter in texten som finns i meddelandeobjektet i p-taggen
+		//skjuter in texten som finns i meddelandeobjektet i p-taggen
+		text.innerHTML = MessageBoard.messages[messageID].getHTMLText() + " " +time;
 		
 		var counterDiv =document.getElementById("counter");
-		var couterDivText=document.createTextNode("Antal meddelanden: "+ MessageBoard.messages.length);
-		counterDiv.appendChild(couterDivText);
+		counterDiv.innerHTML = "Antal meddelanden: " +MessageBoard.messages.length;
+		//var couterDivText=document.createTextNode("Antal meddelanden: "+ MessageBoard.messages.length);
+		//counterDiv.appendChild(couterDivText);
 	}, 
 
 	init : function(e) {
@@ -47,8 +50,8 @@ var MessageBoard = {
 
 		var textInput = document.getElementById("writeMessage");
 		textInput.value = "";
-		MessageBoard.renderMessages();
-
+		//MessageBoard.renderMessages(); VÄLJ DENNA OCH KOMMATERA BORT NÄSTA RAD FÖR ATT GÅ VIA MESSAGES
+		MessageBoard.renderMessage(MessageBoard.messages.length-1);
 	},
 }
 

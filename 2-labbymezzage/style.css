@@ -15,12 +15,18 @@ html {
 	padding: 0.5em;
 }
 #messageInput, #messageOutput {
-	background-color: #fff;
+	background-color: #F2CEA2;
+	opacity: 0.8;
 	padding: 0.5em;
 	}
 textarea{
 	width: 97%;
 	margin: auto;
+}
+#counter{
+	color: silver;
+	background-color: #425059;
+	opacity: 0.7;
 }
 h1{
 	color: silver;
@@ -28,4 +34,5 @@ h1{
 p{
 	border: inset 0.1em silver;
 	font-family: monospace;
+	padding: 0.5em;
 }
