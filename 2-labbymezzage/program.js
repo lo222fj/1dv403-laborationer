@@ -12,10 +12,23 @@ var MessageBoard = {
 
 		//loopar igenom meddelanden och anropar renderMessage för varje objekt
 		var i, counter;
-		for ( i = 0; i < MessageBoard.messages.length; i += 1)
+		for ( i = 0; i < MessageBoard.messages.length; i += 1){
 
 			MessageBoard.renderMessage(i);
+		}
+		MessageBoard.countMessages();
 	},
+
+	countMessages : function() {
+		var counterDiv = document.getElementById("counter");
+		console.log("före")
+		if (MessageBoard.messages.length > 0) {
+			counterDiv.innerHTML = "Antal meddelanden: " + MessageBoard.messages.length;
+		} else {
+			counterDiv.innerHTML = "";
+		}
+	},
+
 	//skriver ut ett meddelande
 	renderMessage : function(messageID) {
 
@@ -30,32 +43,37 @@ var MessageBoard = {
 		imgRemove.setAttribute("src", "remove.png");
 		imgRemove.alt = "Close";
 		//...och skjuter in den i en a-tag
-		var a = document.createElement("a");
-		a.href = "#";
-		a.appendChild(imgRemove);
-		eachMessage.appendChild(a);
-		
-		
-//HÄR SKA DU FORTSÄTTA! GÖR FUNKTIONEN SOM TAR BORT MEDDELANDE!
-		//imgRemove.onclick = function() {
-			//MessageBoard.removeMessage(messageID);
-		//}
-		
-		var messageText = document.createElement("p");
-		messageText.innerHTML = MessageBoard.messages[messageID].getHTMLText();
-		eachMessage.appendChild(messageText);
+		var aRemove = document.createElement("a");
+		aRemove.href = "#";
+		aRemove.appendChild(imgRemove);
+		eachMessage.appendChild(aRemove);
 
+		aRemove.onclick = function() {
+			MessageBoard.removeMessage(messageID);
+		}
+		//imgRemove.onclick = function() {
+		//MessageBoard.removeMessage(messageID);
+
+		//skapar en span som innehåller tid då meddelandet skapades. Denna läggs i meddelandet
 		var timeOutprint = document.createElement("span");
 		var time = MessageBoard.messages[messageID].getDate().toLocaleTimeString();
 		timeOutprint.innerHTML = time;
 		eachMessage.appendChild(timeOutprint);
 
-		//skjuter in texten som finns i meddelandeobjektet i p-taggen
+		//skapar en p-tag med inmatad text i. Denna läggs till i meddelandet
+		var messageText = document.createElement("p");
+		messageText.innerHTML = MessageBoard.messages[messageID].getHTMLText();
+		eachMessage.appendChild(messageText);
 
-		var counterDiv = document.getElementById("counter");
-		counterDiv.innerHTML = "Antal meddelanden: " + MessageBoard.messages.length;
-		//var couterDivText=document.createTextNode("Antal meddelanden: "+ MessageBoard.messages.length);
-		//counterDiv.appendChild(couterDivText);
+		//Lägger ut antal meddelanden
+		MessageBoard.countMessages();
+		
+		
+	},
+
+	removeMessage : function(messageID) {
+		MessageBoard.messages.splice(messageID, 1);
+		MessageBoard.renderMessages();
 	},
 
 	init : function(e) {
@@ -69,9 +87,7 @@ var MessageBoard = {
 		var message = {};
 
 		text = document.getElementById("writeMessage").value;
-		//console.log(text);
 		message = new Message(text, new Date());
-		//console.log(message.toString());
 		MessageBoard.messages.push(message);
 
 		var textInput = document.getElementById("writeMessage");

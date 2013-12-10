@@ -36,11 +36,13 @@ article{
 	font-family: monospace;
 	padding: 0.5em;
 	overflow: auto;
+	margin-bottom: 0.5em;
 }
 p{
 	width: 60%;
 }
-span, img{
+span, a{
 	display: block;
 	float: right;
+	margin-left: 0.5em;
 }
