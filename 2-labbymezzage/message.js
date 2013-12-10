@@ -32,7 +32,9 @@ Message.prototype.getHTMLText = function() {
 	return messageText.replace(/\n/g, '<br />');
 	//message = message.replace(/\n/g, '<br />');
 }
+Message.prototype.getDateText = function(){
+	var i = this.getDate().getMonth();
+	var months = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
 
-//Message.prototype.getDateText = function(){
-	//var 
-//}
+	return	"Inlägget skapades den "+this.getDate().getDate()+" " +months[i]+" "+this.getDate().getFullYear()+" klockan "+this.getDate().toLocaleTimeString();
+}

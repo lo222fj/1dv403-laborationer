@@ -21,7 +21,7 @@ var MessageBoard = {
 
 	countMessages : function() {
 		var counterDiv = document.getElementById("counter");
-		console.log("före")
+		
 		if (MessageBoard.messages.length > 0) {
 			counterDiv.innerHTML = "Antal meddelanden: " + MessageBoard.messages.length;
 		} else {
@@ -38,21 +38,40 @@ var MessageBoard = {
 		var eachMessage = document.createElement("article");
 		outputDiv.appendChild(eachMessage);
 
+		//gör tid-knapp...
+		var imgClock = document.createElement("img");
+		imgClock.setAttribute("src", "clock.png");
+		imgClock.setAttribute("alt", "Date and time");
+		//...och skjuter in den i en a-tag...
+		var aClock = document.createElement("a");
+		aClock.setAttribute("href", "#");
+		aClock.appendChild(imgClock);
+		//...som skjuts in i meddelandet
+		eachMessage.appendChild(aClock);	
+		
+		aClock.onclick = function () {
+		 alert (MessageBoard.messages[messageID].getDateText());
+		}	
+				
 		//gör ta-bort-knapp...
 		var imgRemove = document.createElement("img");
 		imgRemove.setAttribute("src", "remove.png");
 		imgRemove.alt = "Close";
-		//...och skjuter in den i en a-tag
+		//...och skjuter in den i en a-tag...
 		var aRemove = document.createElement("a");
 		aRemove.href = "#";
 		aRemove.appendChild(imgRemove);
+		//...som skjuts in i meddelandet
 		eachMessage.appendChild(aRemove);
 
 		aRemove.onclick = function() {
 			MessageBoard.removeMessage(messageID);
 		}
-		//imgRemove.onclick = function() {
-		//MessageBoard.removeMessage(messageID);
+		
+		//skapar en p-tag med inmatad text i. Denna läggs till i meddelandet
+		var messageText = document.createElement("p");
+		messageText.innerHTML = MessageBoard.messages[messageID].getHTMLText();
+		eachMessage.appendChild(messageText);
 
 		//skapar en span som innehåller tid då meddelandet skapades. Denna läggs i meddelandet
 		var timeOutprint = document.createElement("span");
@@ -60,14 +79,8 @@ var MessageBoard = {
 		timeOutprint.innerHTML = time;
 		eachMessage.appendChild(timeOutprint);
 
-		//skapar en p-tag med inmatad text i. Denna läggs till i meddelandet
-		var messageText = document.createElement("p");
-		messageText.innerHTML = MessageBoard.messages[messageID].getHTMLText();
-		eachMessage.appendChild(messageText);
-
 		//Lägger ut antal meddelanden
 		MessageBoard.countMessages();
-		
 		
 	},
 
