@@ -1,7 +1,6 @@
 /*Efter detta ska du skapa ett statiskt objekt (objektliteral) i vilket du lägger själva applikationens
  ”motor”. Detta statiska objekt lägger du i en egen js-fil.
- */
-"use strict";
+ */"use strict";
 var MessageBoard = {
 
 	messages : [],
@@ -23,11 +22,7 @@ var MessageBoard = {
 	countMessages : function() {
 		var counterDiv = document.getElementById("counter");
 
-		//if (MessageBoard.messages.length > 0) {
 		counterDiv.innerHTML = "Antal meddelanden: " + MessageBoard.messages.length;
-		//} else {
-		//counterDiv.innerHTML = "";
-		//}
 	},
 
 	//skriver ut ett meddelande
@@ -65,8 +60,8 @@ var MessageBoard = {
 		eachMessage.appendChild(aRemove);
 
 		aRemove.onclick = function() {
-			if((confirm("Vill du verkligen radera meddelandet?"))==true)
-			MessageBoard.removeMessage(messageID);
+			if ((confirm("Vill du verkligen radera meddelandet?")) == true)
+				MessageBoard.removeMessage(messageID);
 		}
 		//skapar en p-tag med inmatad text i. Denna läggs till i meddelandet
 		var messageText = document.createElement("p");
@@ -91,24 +86,24 @@ var MessageBoard = {
 
 	init : function(e) {
 		/*Eventhanterare som känner av nedtryckt tangent läggs på textrutan
-		Om nedtryckt tangent är enter(13) och shift-tangenten inte är nedtryckt
-		så  anropas funktionen submitIfEnterPresses...*/
+		 Om nedtryckt tangent är enter(13) och shift-tangenten inte är nedtryckt
+		 så  anropas funktionen submitIfEnterPresses...*/
 		writeMessage.onkeydown = function(e) {
 
 			if (!e) {
-				var e = window.event
+				var e = window.event;
 			};
 			if (e.keyCode == 13 && e.shiftKey == false) {
+				e.preventDefault();
 				submitIfEnterPressed();
 			}
 		}
-		
 		//...som anropar createNewMessage
 		function submitIfEnterPressed() {
 
 			MessageBoard.createNewMessage()
 		}
-		
+
 		//Eventhanterare på skickaknapp. Knappen tilldelas funktionen createNewMessge
 		var submit = document.getElementById("saveMessage");
 		submit.onclick = MessageBoard.createNewMessage;
@@ -137,13 +132,4 @@ var MessageBoard = {
 window.onload = function() { debugger;
 	MessageBoard.init();
 
-};
-
-/*
- //var mess = new Message("hej hopp", new Date());
- //this.messages.push(mess);
- //var mess = new Message("HEJ HOPP", new Date());
- //this.messages.push(mess);
- //alert(MessageBoard.messages);
- //alert(MessageBoard.messages[1].getText());
- }*/
+}; 
