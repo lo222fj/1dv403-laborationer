@@ -1,6 +1,7 @@
 /*Efter detta ska du skapa ett statiskt objekt (objektliteral) i vilket du lägger själva applikationens
  ”motor”. Detta statiska objekt lägger du i en egen js-fil.
  */
+"use strict";
 var MessageBoard = {
 
 	messages : [],
@@ -12,7 +13,7 @@ var MessageBoard = {
 
 		//loopar igenom meddelanden och anropar renderMessage för varje objekt
 		var i, counter;
-		for ( i = 0; i < MessageBoard.messages.length; i += 1){
+		for ( i = 0; i < MessageBoard.messages.length; i += 1) {
 
 			MessageBoard.renderMessage(i);
 		}
@@ -21,12 +22,12 @@ var MessageBoard = {
 
 	countMessages : function() {
 		var counterDiv = document.getElementById("counter");
-		
-		if (MessageBoard.messages.length > 0) {
-			counterDiv.innerHTML = "Antal meddelanden: " + MessageBoard.messages.length;
-		} else {
-			counterDiv.innerHTML = "";
-		}
+
+		//if (MessageBoard.messages.length > 0) {
+		counterDiv.innerHTML = "Antal meddelanden: " + MessageBoard.messages.length;
+		//} else {
+		//counterDiv.innerHTML = "";
+		//}
 	},
 
 	//skriver ut ett meddelande
@@ -47,12 +48,11 @@ var MessageBoard = {
 		aClock.setAttribute("href", "#");
 		aClock.appendChild(imgClock);
 		//...som skjuts in i meddelandet
-		eachMessage.appendChild(aClock);	
-		
-		aClock.onclick = function () {
-		 alert (MessageBoard.messages[messageID].getDateText());
-		}	
-				
+		eachMessage.appendChild(aClock);
+
+		aClock.onclick = function() {
+			alert(MessageBoard.messages[messageID].getDateText());
+		}
 		//gör ta-bort-knapp...
 		var imgRemove = document.createElement("img");
 		imgRemove.setAttribute("src", "remove.png");
@@ -65,9 +65,9 @@ var MessageBoard = {
 		eachMessage.appendChild(aRemove);
 
 		aRemove.onclick = function() {
+			if((confirm("Vill du verkligen radera meddelandet?"))==true)
 			MessageBoard.removeMessage(messageID);
 		}
-		
 		//skapar en p-tag med inmatad text i. Denna läggs till i meddelandet
 		var messageText = document.createElement("p");
 		messageText.innerHTML = MessageBoard.messages[messageID].getHTMLText();
@@ -81,7 +81,7 @@ var MessageBoard = {
 
 		//Lägger ut antal meddelanden
 		MessageBoard.countMessages();
-		
+
 	},
 
 	removeMessage : function(messageID) {
@@ -90,10 +90,32 @@ var MessageBoard = {
 	},
 
 	init : function(e) {
+		/*Eventhanterare som känner av nedtryckt tangent läggs på textrutan
+		Om nedtryckt tangent är enter(13) och shift-tangenten inte är nedtryckt
+		så  anropas funktionen submitIfEnterPresses...*/
+		writeMessage.onkeydown = function(e) {
+
+			if (!e) {
+				var e = window.event
+			};
+			if (e.keyCode == 13 && e.shiftKey == false) {
+				submitIfEnterPressed();
+			}
+		}
+		
+		//...som anropar createNewMessage
+		function submitIfEnterPressed() {
+
+			MessageBoard.createNewMessage()
+		}
+		
+		//Eventhanterare på skickaknapp. Knappen tilldelas funktionen createNewMessge
 		var submit = document.getElementById("saveMessage");
 		submit.onclick = MessageBoard.createNewMessage;
 
-		document.getElementById("writeMessage").focus();
+		MessageBoard.countMessages();
+
+		writeMessage.focus();
 	},
 	createNewMessage : function() {
 		var text;

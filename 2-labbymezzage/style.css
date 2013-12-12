@@ -2,46 +2,51 @@ html {
 	height: 100%;
 	background-image: url(katt_solnedg.jpg);
 	background-size: cover;
-	background-repeat:no-repeat;
+	background-repeat: no-repeat;
 }
-#container{
+#container {
 	max-width: 960px;
-	border: black solid 2px;
 }
-#content{
+#content {
 	width: 60%;
 	margin: auto auto;
-	border: green solid 2px;
 	padding: 0.5em;
 }
-#messageInput, #messageOutput {
+#textBox {
 	background-color: #F2CEA2;
 	opacity: 0.8;
 	padding: 0.5em;
-	}
-textarea{
-	width: 97%;
-	margin: auto;
 }
-#counter{
+div {
+	margin-bottom: 0.5em;
+}
+textarea {
+	padding: 0;
+	width: 100%;
+}
+#counter {
 	color: silver;
 	background-color: #425059;
 	opacity: 0.7;
 }
-h1{
+#messageInput {
+	padding: 0;
+}
+h1 {
 	color: silver;
 }
-article{
+article {
 	border: inset 0.1em silver;
 	font-family: monospace;
 	padding: 0.5em;
 	overflow: auto;
 	margin-bottom: 0.5em;
 }
-p{
+p {
 	width: 60%;
+	margin: 0.5em;
 }
-span, a{
+span, a {
 	display: block;
 	float: right;
 	margin-left: 0.5em;
