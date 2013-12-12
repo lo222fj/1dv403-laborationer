@@ -6,6 +6,7 @@ html {
 }
 #container {
 	max-width: 960px;
+	margin: auto auto;
 }
 #content {
 	width: 60%;
