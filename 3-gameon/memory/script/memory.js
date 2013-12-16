@@ -3,9 +3,9 @@ var memory = {
 
 	init : function() {
 
-		var rows = 3;
+		var rows = 2;
 		//välj antal rader här
-		var cols = 3;
+		var cols = 4;
 		//välj antal kollumner här
 
 		var table = document.createElement("table");
@@ -13,6 +13,10 @@ var memory = {
 		var rowNr = null;
 		var colNr = null;
 		var tdNr = 0;
+		var brickOne;
+		var brickTwo;
+
+		var counter = 0;
 
 		memory.randomArray = RandomGenerator.getPictureArray(rows, cols);
 		console.log(this.randomArray);
@@ -25,7 +29,7 @@ var memory = {
 			tr = document.createElement("tr");
 			table.appendChild(tr);
 
-			for ( colNr = 1; colNr <= cols; colNr += 1, tdNr +=1) {
+			for ( colNr = 1; colNr <= cols; colNr += 1, tdNr += 1) {
 				createTd(tdNr);
 			}
 		}
@@ -46,10 +50,42 @@ var memory = {
 			td.appendChild(a);
 
 			a.onclick = function(e) {
-				var sorce = "pics/"+memory.randomArray[tdNr]+".png";
-				img.setAttribute("src", sorce);
-				alert(memory.randomArray[tdNr]);
-				
+				var sorce = img.getAttribute("src");
+				var newSorce = "pics/" + memory.randomArray[tdNr] + ".png";
+
+				var pairs;
+
+				if (sorce == "pics/0.png") {
+					if (counter < 2) {
+						img.setAttribute("src", newSorce);
+						counter += 1;
+						document.title = counter;
+
+						if (counter == 1) {
+							brickOne = newSorce;
+							console.log(brickOne);
+						}
+
+						if (counter == 2) {
+							brickTwo = newSorce;
+							console.log(brickTwo);
+							
+							if (brickOne == brickTwo) {
+								alert("Brickorna är lika");
+								//antal par ska räknas upp. Bilderna ska inte
+								//vara klickbara igen
+							} else {
+								alert("Brickorna är olika.");
+								//Vänd inom en sekund med timer
+							}
+						}
+					};
+				} else {
+					img.setAttribute("src", "pics/0.png");
+					counter -= 1;
+					document.title = counter;
+				}
+
 			};
 		}
 
