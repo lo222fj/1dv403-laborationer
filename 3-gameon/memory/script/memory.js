@@ -13,9 +13,11 @@ var memory = {
 		var rowNr = null;
 		var colNr = null;
 		var tdNr = 0;
+
 		var brickOne;
 		var brickTwo;
-
+		var guesses=0;
+		var pairs=0;
 		var counter = 0;
 
 		memory.randomArray = RandomGenerator.getPictureArray(rows, cols);
@@ -53,39 +55,39 @@ var memory = {
 				var sorce = img.getAttribute("src");
 				var newSorce = "pics/" + memory.randomArray[tdNr] + ".png";
 
-				var pairs;
 
 				if (sorce == "pics/0.png") {
 					if (counter < 2) {
 						img.setAttribute("src", newSorce);
 						counter += 1;
 						document.title = counter;
-
+						
 						if (counter == 1) {
-							brickOne = newSorce;
+							brickOne = img;
+							console.log(img);
 							console.log(brickOne);
 						}
 
 						if (counter == 2) {
-							brickTwo = newSorce;
+							brickTwo = img;
 							console.log(brickTwo);
 							
-							if (brickOne == brickTwo) {
-								alert("Brickorna är lika");
+							if (brickOne.getAttribute("src") == brickTwo.getAttribute("src")) {
+								counter = 0;
+								pairs +=1;
 								//antal par ska räknas upp. Bilderna ska inte
 								//vara klickbara igen
 							} else {
-								alert("Brickorna är olika.");
 								//Vänd inom en sekund med timer
-							}
+								var timer = setTimeout(function(){
+									brickOne.setAttribute("src", "pics/0.png"); 
+									brickTwo.setAttribute("src", "pics/0.png");
+									counter = 0}, 1000);
+								}
+							
 						}
 					};
-				} else {
-					img.setAttribute("src", "pics/0.png");
-					counter -= 1;
-					document.title = counter;
-				}
-
+				} 
 			};
 		}
 
