@@ -46,6 +46,7 @@ article {
 p {
 	width: 60%;
 	margin: 0.5em;
+	word-wrap: break-word;
 }
 span, a {
 	display: block;
