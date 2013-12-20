@@ -22,7 +22,7 @@ var memory = {
 		//Antal uppvända brickor som inte ingår i uppvända par
 
 		memory.randomArray = RandomGenerator.getPictureArray(rows, cols);
-		console.log(this.randomArray);
+		//console.log(this.randomArray);
 
 		var memoryBoard = document.getElementById("memoryBoard");
 
@@ -79,8 +79,6 @@ var memory = {
 										document. getElementById("counter").appendChild(p);
 										
 									};
-								//antal par ska räknas upp. Bilderna ska inte
-								//vara klickbara igen
 							} else {
 								//Vänd inom en sekund med timer
 								var timer = setTimeout(function() {
@@ -99,17 +97,7 @@ var memory = {
 	},
 
 	randomArray : [],
-	//Vänd bricka. Tar emot den a-tag som klickats på
-	/*turnBrick : function() {
-	 alert("Iiiii");
-	 },*/
-	/*turnBackBrick : function(//skicka in a-tag som ska påverkas) {
-
-	 }*/
-
 }
 window.onload = function() {
 	memory.init();
-	console.log(memory.randomArray);
-
 }
