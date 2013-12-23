@@ -1,0 +1,20 @@
+ #kontaktformular {
+    width: 100%;
+}
+#kontaktformular label {
+    display: block;
+    padding-right: 1em;
+}
+#arende label {
+    width: 80px;
+}
+#kontaktuppgifter label {
+    width: 220px;
+}
+#kontaktformular input, #kontaktformular textarea, #kontaktformular select {
+    width: 300px;
+    margin-bottom: 1em;
+}
+#kontaktformular .checkbox {
+    width: auto;
+}
