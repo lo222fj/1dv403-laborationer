@@ -8,9 +8,8 @@ var validator = {
         var postcode = form.elements["postcode"];
         var email = form.elements["email"];
         var button = form.elements["buy"];
-        var fieldset = document.getElementsByTagName("fieldset");
-        //Sätter fokus i första inputen
 
+        //Sätter fokus i första inputen
         fn.focus();
 
         //Eventhanterare
@@ -33,22 +32,15 @@ var validator = {
             showConfirmWindow(form);
         };
 
-        /*form.onsubmit = function() {
-         var answer = confirmAndSubmit(this);
-         return answer;
-         };*/
-
         function showConfirmWindow(form) {
+         /*Loopar alla element för att "disabla" alla för att man inte ska kunna ändra
+          * i formulär när rutan ligger framför*/
             var nr;
-            console.log(form);
-            console.log(form.elements);
-            console.log(form.elements.length);
-            
-            for(nr=1; nr<form.elements.length; nr +=1){
+             for(nr=1; nr<form.elements.length; nr +=1){
                 form.elements[nr].disabled=true;
             }
             
-            // Skapar dimmad bakgrundsfönster
+            // Skapar dimmat bakgrundsfönster
             var overlayDiv = document.createElement("div");
             overlayDiv.setAttribute("id", "overlay");
             document.body.appendChild(overlayDiv);
@@ -63,7 +55,6 @@ var validator = {
             confirmationDivHeader.appendChild(createTextnode(confirmationDivHeader, "Vänligen bekräfta ditt köp"));
 
             var confirmationDivClose = document.createElement("span");
-
             confirmationDiv.appendChild(confirmationDivHeader);
 
             //Skriver ut varje par av fältnamn(span) och ifyllt värde (span) i p-tag
@@ -79,8 +70,8 @@ var validator = {
 
                 var inputText = document.createTextNode(label[i].firstChild.textContent);
                 //firstChild returnerar en nod. Därför ska jag inte skapa en ny!
-                console.log("inputName " + inputName);
-                console.log("inputText " + inputText)
+                //console.log("inputName " + inputName);
+                //console.log("inputText " + inputText)
                 inputName.appendChild(inputText);
                 row.appendChild(inputName);
                 //Varje inmatat värde
@@ -112,23 +103,20 @@ var validator = {
         };
 
         function confirm() {
-            var nr;
-            console.log(form);
-            console.log(form.elements);
-            console.log(form.elements.length);
-            
-            for(nr=1; nr<form.elements.length; nr +=1){
-                form.elements[nr].disabled=false;
-            }
+            disabledFalse();
             form.submit();
         }
-
         function cancel() {
             var overlay = document.getElementById("overlay");
             overlay.remove();
             var confirmationDiv = document.getElementById("confirmationDiv");
             confirmationDiv.remove();
             
+            disabledFalse();
+        }
+/*Egenskap som är disabled skickas inte
+med när ett formulär skickas. Måste ändra innan. */
+        function disabledFalse(){
             var nr;
             console.log(form);
             console.log(form.elements);
@@ -138,14 +126,6 @@ var validator = {
                 form.elements[nr].disabled=false;
             }
         }
-
-        /*form.onsubmit = function(e) {
-         //För att användaren inte ska kunna trycka på knappen igen sätt
-         //mySendButton.disabled= true; Glöm inte att sätta tillbaka till false
-         // ev mySendButton.value = "Skickar...";
-         return false
-         }*/
-
         function validateFiveDigits(checkedPostcode, helpTextSpan) {
             //validateNotEmpty(inputField, helpTextSpan);
             removeChilds(helpTextSpan);
@@ -159,7 +139,7 @@ var validator = {
                 textNodeInSpan.nodeValue = "";
             }
         }
-
+        //Rensar inmatning från "SE", tomrum och "-"
         function correctPostcode(inputValue) {
             var pattern = /SE|\s|-/g;
             var checkedPostcode = inputValue.replace(pattern, "");
@@ -178,7 +158,6 @@ var validator = {
                 textNodeInSpan.nodeValue = "";
             }
         }
-
         //Validering av email-adress
         function validateEmail(inputField, helpTextSpan) {
             removeChilds(helpTextSpan);
@@ -187,7 +166,6 @@ var validator = {
             var pattern = /^(?!\.)(\w|-|\.){1,64}(?!\.)@(?!\.)[-.a-zåäö0-9]{4,253}$/;
             if (!inputField.value.match(pattern)) {
                 textNodeInSpan.nodeValue = "Angiven e-postadress är inte giltig";
-
             } else {
                 textNodeInSpan.nodeValue = "";
             }
@@ -198,21 +176,15 @@ var validator = {
             element.appendChild(textNodeInElement);
             return textNodeInElement;
         }
-
         //Plocka bort tidigare textnoder
         function removeChilds(span) {
             if (span.hasChildNodes()) {
                 span.removeChild(span.firstChild);
             }
         }
+}      
 
-},      
-    //form: document.getElementById("form"),
 };
 window.onload = function() {
     validator.init();
 };
-/*Loopa alla element för att ex.vis "disabla" alla. Använd for in eller for-
- * loop med form.elements.length
- *  egenskap disabled = true/false. Egenskap som är disabled skickas inte
- * med när ett formulär skickas. Måste ändra innan. */

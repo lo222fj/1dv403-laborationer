@@ -28,13 +28,13 @@
 	border: double 0.2em #f0f0f0;
 }
 .labels{
-	background-color: red;
+/*	background-color: red; */
 	width: 8em;
 	display: inline-block;
 }
-.customerInput{
+/*.customerInput{
 	background-color: blue;
-}
+}*/
 #overlay{
 	z-index: 50;
 	position: fixed; top: 0; left: 0;
