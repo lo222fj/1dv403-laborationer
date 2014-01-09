@@ -18,7 +18,7 @@
 		</script>
 		<title>Validering</title>
 	</head>
-
+<body>
 	<form id="form" action="http://voyager.lnu.se/tekinet/kurser/dtt/wp_webbteknik/process_form.php"
 	method="post">
 
@@ -49,14 +49,15 @@
 			<br />
 			<label for="pricemodel">Prismodell</label><br />
 			<select class="dataFromCustomer" id="pricemodel" name="pricemodel">
-				<option value="low">Låg</option>
-				<option value="medium">Medel</option>
-				<option value="high">Hög</option>
+				<option value="Låg">Låg</option>
+				<option value="Medel">Medel</option>
+				<option value="Hög">Hög</option>
 			</select>
 		</fieldset>
 		
-		<input class="button" type="submit" name="buy" value="Genomför köp"
+		<input class="button" type="button" name="buy" value="Genomför köp"
 		/>
 	</form>
 <script src="validator.js"></script>
+</body>
 </html>

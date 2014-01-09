@@ -18,3 +18,28 @@
 #kontaktformular .checkbox {
     width: auto;
 }
+.help{
+	color: red;
+}
+#confirmationDiv{
+	z-index: 100;
+	position: fixed; top: 5em; left: 5em;
+	background-color: #fff;
+	border: double 0.2em #f0f0f0;
+}
+.labels{
+	background-color: red;
+	width: 8em;
+	display: inline-block;
+}
+.customerInput{
+	background-color: blue;
+}
+#overlay{
+	z-index: 50;
+	position: fixed; top: 0; left: 0;
+	background-color: #999;
+	opacity: 0.7;
+	width: 100%;
+	height: 100%;
+}
