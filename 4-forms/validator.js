@@ -30,7 +30,7 @@ var validator = {
             validateEmail(this, document.getElementById("emailHelp"));
         };
         button.onclick = function() {
-            showConfirmWindow();
+            showConfirmWindow(form);
         };
 
         /*form.onsubmit = function() {
@@ -38,7 +38,16 @@ var validator = {
          return answer;
          };*/
 
-        function showConfirmWindow(e) {
+        function showConfirmWindow(form) {
+            var nr;
+            console.log(form);
+            console.log(form.elements);
+            console.log(form.elements.length);
+            
+            for(nr=1; nr<form.elements.length; nr +=1){
+                form.elements[nr].disabled=true;
+            }
+            
             // Skapar dimmad bakgrundsfönster
             var overlayDiv = document.createElement("div");
             overlayDiv.setAttribute("id", "overlay");
@@ -103,6 +112,14 @@ var validator = {
         };
 
         function confirm() {
+            var nr;
+            console.log(form);
+            console.log(form.elements);
+            console.log(form.elements.length);
+            
+            for(nr=1; nr<form.elements.length; nr +=1){
+                form.elements[nr].disabled=false;
+            }
             form.submit();
         }
 
@@ -111,6 +128,15 @@ var validator = {
             overlay.remove();
             var confirmationDiv = document.getElementById("confirmationDiv");
             confirmationDiv.remove();
+            
+            var nr;
+            console.log(form);
+            console.log(form.elements);
+            console.log(form.elements.length);
+            
+            for(nr=1; nr<form.elements.length; nr +=1){
+                form.elements[nr].disabled=false;
+            }
         }
 
         /*form.onsubmit = function(e) {
@@ -166,7 +192,6 @@ var validator = {
                 textNodeInSpan.nodeValue = "";
             }
         }
-
         //Skapa textnod
         function createTextnode(element, text) {
             var textNodeInElement = document.createTextNode(text);
@@ -181,7 +206,7 @@ var validator = {
             }
         }
 
-    },
+},      
     //form: document.getElementById("form"),
 };
 window.onload = function() {
