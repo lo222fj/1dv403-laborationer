@@ -11,35 +11,47 @@ var validator = {
 
         //Sätter fokus i första inputen
         fn.focus();
+        button.disabled=true;
 
         //Eventhanterare
         fn.onblur = function() {
             validateNotEmpty(this, document.getElementById("firstNameHelp"));
+            if (validateAll(form)) {
+                button.disabled = false;
+            }
         };
         sn.onblur = function() {
             validateNotEmpty(this, document.getElementById("surNameHelp"));
+            if (validateAll(form)) {
+                button.disabled = false;
+            }
         };
         postcode.onblur = function() {
-            var checkedPostcode = correctPostcode(postcode.value);
-            //Här är det postnr som ska skickas
-            postcode.value = checkedPostcode;
-            validateFiveDigits(checkedPostcode, document.getElementById("postcodeHelp"));
+            validatePostcode(this);
+            if (validateAll(form)) {
+                button.disabled = false;
+            }
         };
         email.onblur = function() {
             validateEmail(this, document.getElementById("emailHelp"));
+            if (validateAll(form)) {
+                button.disabled = false;
+            }
         };
         button.onclick = function() {
-            showConfirmWindow(form);
+            if (validateAll(form)) {
+                showConfirmWindow(form);
+            }
         };
 
         function showConfirmWindow(form) {
-         /*Loopar alla element för att "disabla" alla för att man inte ska kunna ändra
-          * i formulär när rutan ligger framför*/
+            /*Loopar alla element för att "disabla" alla för att man inte ska kunna ändra
+             * i formulär när rutan ligger framför*/
             var nr;
-             for(nr=1; nr<form.elements.length; nr +=1){
-                form.elements[nr].disabled=true;
+            for ( nr = 1; nr < form.elements.length; nr += 1) {
+                form.elements[nr].disabled = true;
             }
-            
+
             // Skapar dimmat bakgrundsfönster
             var overlayDiv = document.createElement("div");
             overlayDiv.setAttribute("id", "overlay");
@@ -106,25 +118,38 @@ var validator = {
             disabledFalse();
             form.submit();
         }
+        function validateAll() {
+            if (validateNotEmpty(fn, document.getElementById("firstNameHelp")) && 
+            validateNotEmpty(sn, document.getElementById("surNameHelp")) && 
+            validatePostcode(postcode) && 
+            validateEmail(email, document.getElementById("emailHelp"))) {
+                return true;
+            } else {
+                return false
+            };
+        };
         function cancel() {
             var overlay = document.getElementById("overlay");
             overlay.remove();
             var confirmationDiv = document.getElementById("confirmationDiv");
             confirmationDiv.remove();
-            
+
             disabledFalse();
         }
-/*Egenskap som är disabled skickas inte
-med när ett formulär skickas. Måste ändra innan. */
-        function disabledFalse(){
+        /*Egenskap som är disabled skickas inte
+         med när ett formulär skickas. Måste ändra innan. */
+        function disabledFalse() {
             var nr;
-            console.log(form);
-            console.log(form.elements);
-            console.log(form.elements.length);
-            
-            for(nr=1; nr<form.elements.length; nr +=1){
-                form.elements[nr].disabled=false;
+            for ( nr = 1; nr < form.elements.length; nr += 1) {
+                form.elements[nr].disabled = false;
             }
+        }
+        function validatePostcode() {
+            var checkedPostcode = correctPostcode(postcode.value);
+            //Här är det postnr som ska skickas
+            postcode.value = checkedPostcode;
+            var answer = validateFiveDigits(checkedPostcode, document.getElementById("postcodeHelp"));
+            return answer;
         }
         function validateFiveDigits(checkedPostcode, helpTextSpan) {
             //validateNotEmpty(inputField, helpTextSpan);
@@ -135,8 +160,10 @@ med när ett formulär skickas. Måste ändra innan. */
             if (!checkedPostcode.match(pattern)) {
                 //inputField.focus();
                 textNodeInSpan.nodeValue = "Fyll i på mönstret XXXXX där X är en siffra";
+                return false;
             } else {
                 textNodeInSpan.nodeValue = "";
+                return true;
             }
         }
         //Rensar inmatning från "SE", tomrum och "-"
@@ -145,7 +172,6 @@ med när ett formulär skickas. Måste ändra innan. */
             var checkedPostcode = inputValue.replace(pattern, "");
             return checkedPostcode;
         }
-
         //Validering tomma fält
         function validateNotEmpty(inputField, helpTextSpan) {
             removeChilds(helpTextSpan);
@@ -153,9 +179,10 @@ med när ett formulär skickas. Måste ändra innan. */
 
             if (inputField.value.length === 0) {
                 textNodeInSpan.nodeValue = "Fältet måste fyllas i";
-
+                return false;
             } else {
                 textNodeInSpan.nodeValue = "";
+                return true;
             }
         }
         //Validering av email-adress
@@ -166,8 +193,10 @@ med när ett formulär skickas. Måste ändra innan. */
             var pattern = /^(?!\.)(\w|-|\.){1,64}(?!\.)@(?!\.)[-.a-zåäö0-9]{4,253}$/;
             if (!inputField.value.match(pattern)) {
                 textNodeInSpan.nodeValue = "Angiven e-postadress är inte giltig";
+                return false;
             } else {
                 textNodeInSpan.nodeValue = "";
+                return true;
             }
         }
         //Skapa textnod
@@ -182,8 +211,7 @@ med när ett formulär skickas. Måste ändra innan. */
                 span.removeChild(span.firstChild);
             }
         }
-}      
-
+    }
 };
 window.onload = function() {
     validator.init();
