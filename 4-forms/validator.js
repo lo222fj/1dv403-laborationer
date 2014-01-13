@@ -11,32 +11,19 @@ var validator = {
 
         //Sätter fokus i första inputen
         fn.focus();
-        button.disabled=true;
 
         //Eventhanterare
         fn.onblur = function() {
             validateNotEmpty(this, document.getElementById("firstNameHelp"));
-            if (validateAll(form)) {
-                button.disabled = false;
-            }
         };
         sn.onblur = function() {
             validateNotEmpty(this, document.getElementById("surNameHelp"));
-            if (validateAll(form)) {
-                button.disabled = false;
-            }
         };
         postcode.onblur = function() {
             validatePostcode(this);
-            if (validateAll(form)) {
-                button.disabled = false;
-            }
         };
         email.onblur = function() {
             validateEmail(this, document.getElementById("emailHelp"));
-            if (validateAll(form)) {
-                button.disabled = false;
-            }
         };
         button.onclick = function() {
             if (validateAll(form)) {
@@ -125,6 +112,8 @@ var validator = {
             validateEmail(email, document.getElementById("emailHelp"))) {
                 return true;
             } else {
+                alert("Fyll i alla fält för att kunna genomföra köp");
+                fn.focus();
                 return false
             };
         };
@@ -140,6 +129,7 @@ var validator = {
          med när ett formulär skickas. Måste ändra innan. */
         function disabledFalse() {
             var nr;
+ 
             for ( nr = 1; nr < form.elements.length; nr += 1) {
                 form.elements[nr].disabled = false;
             }
