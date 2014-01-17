@@ -31,9 +31,7 @@ var makePerson = function(persArr) {
 	var averageAge;
 
 	for ( i = 0; i < persArr.length; i++) {
-//		console.log("i for birthday");
 		age = persArr[i].age;
-	//	console.log(age);
 		ages.push(age);
 	}
 	//Maxålder
@@ -62,7 +60,7 @@ var makePerson = function(persArr) {
 	};
 
 	return objekt;
-}
-var data= [{name: "Lotta Onsö", age: 46}, {name: "Jonas Isberg", age: 36}, {name: "Heffa", age: 5}];
+};
+var data= [{name: "John Häggerud", age: 37}, {name: "Johan Leitet", age: 36}, {name: "Mats Loock", age: 46}];
 var result = makePerson(data);
 console.log(result);

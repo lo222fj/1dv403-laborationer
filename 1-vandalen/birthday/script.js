@@ -1,86 +1,82 @@
 "use strict";
 
 window.onload = function() {
+    //Funktionen anropas vid "knapp-klick". Inmatat värde skickas med (date)
+    var birthday = function(date) {
+        // Din kod här.
 
-	var birthday = function(date) {
-// Din kod här.
+        //Ska hantera att inmatning är korrekt. Konstruktorn verkar ge "invalid date"
+        //om inte den sträng som returneras är på formen ÅÅÅÅ-MM-DD och kastar undantag.
+        var dateTypeBirthday = new Date(date);
 
-		console.log(date);
+        if (isNaN(dateTypeBirthday.valueOf())) {
+            throw new Error("Skriv in ett datum på formen 'ÅÅÅÅ-MM-DD'");
+        };
 
-		//Ska hantera att inmatning är korrekt
-		var dateTypeBirthday = new Date(date);
+        //Tar ut månad och dag från födelsedagen
+        var birthMonth = dateTypeBirthday.getMonth();
+        var birthDate = dateTypeBirthday.getDate();
 
-		if (isNaN(dateTypeBirthday.valueOf())) {
-			throw new Error("Skriv in ett datum på formen 'ÅÅÅÅ-MM-DD'");
-		};
+        //Tar fram datumobjekt för aktuellt tid utan klockslag
+        var newDate = new Date();
+        var thisDate = newDate.getDate();
+        var thisMonth = newDate.getMonth();
+        var thisYear = newDate.getFullYear();
+        var today = new Date(thisYear, thisMonth, thisDate);
 
-		//Tar ut månad och dag från födelsedagen
-		var birthMonth = dateTypeBirthday.getMonth();
-		var birthDate = dateTypeBirthday.getDate();
+        var nextYear = thisYear + 1;
 
-		//Tar fram datumobjekt för aktuellt tid utan klockslag
-		var newDate = new Date();
-		var thisDate = newDate.getDate();
-		var thisMonth = newDate.getMonth();
-		var thisYear = newDate.getFullYear();
-		var today = new Date(thisYear, thisMonth, thisDate);
-		
-		var nextYear = thisYear + 1;
+        //Tar fram när nästa födelsedag inträffar
+        var birthdayThisYear = new Date(thisYear, birthMonth, birthDate);
+        var birthdayNextYear = new Date(nextYear, birthMonth, birthDate);
+        var nextBirthday = birthdayThisYear;
 
-		//Tar fram när nästa födelsedag inträffar
-		var birthdayThisYear = new Date(thisYear, birthMonth, birthDate);
-		var birthdayNextYear = new Date(nextYear, birthMonth, birthDate);
-		var nextBirthday = birthdayThisYear;
-		
-		if (today > birthdayThisYear) {
-			nextBirthday = birthdayNextYear;
-		}
-		
-		//Räknar ut återstående dagar till nästa födelsedag
-		var remainingDays = (nextBirthday - today)/1000/60/60/24;
-		 
-		
-		return remainingDays;
+        if (today > birthdayThisYear) {
+            nextBirthday = birthdayNextYear;
+        }
 
-		
-	};
-	// ------------------------------------------------------------------------------
+        //Räknar ut återstående dagar till nästa födelsedag
+        var remainingDays = (nextBirthday - today) / 1000 / 60 / 60 / 24;
 
-	// Kod för att hantera utskrift och inmatning. Denna ska du inte behöva förändra
-	var p = document.querySelector("#value");
-	// Referens till DOM-noden med id="#value"
-	var input = document.querySelector("#string");
-	var submit = document.querySelector("#send");
+        return remainingDays;
+    };
+    // ------------------------------------------------------------------------------
 
-	// Vi kopplar en eventhanterare till formulärets skickaknapp som kör en anonym funktion.
-	submit.addEventListener("click", function(e) {
-		e.preventDefault();
-		// Hindra formuläret från att skickas till servern. Vi hanterar allt på klienten.
+    // Kod för att hantera utskrift och inmatning. Denna ska du inte behöva förändra
+    var p = document.querySelector("#value");
+    // Referens till DOM-noden med id="#value"
+    var input = document.querySelector("#string");
+    var submit = document.querySelector("#send");
 
-		p.classList.remove("error");
+    // Vi kopplar en eventhanterare till formulärets skickaknapp som kör en anonym funktion.
+    submit.addEventListener("click", function(e) {
+        e.preventDefault();
+        // Hindra formuläret från att skickas till servern. Vi hanterar allt på klienten.
 
-		try {
-			var answer = birthday(input.value)// Läser in texten från textrutan och skickar till funktionen "convertString"
-			var message;
-			switch (answer) {
-				case 0:
-					message = "Grattis på födelsedagen!";
-					break;
-				case 1:
-					message = "Du fyller år imorgon!";
-					break;
-				default:
-					message = "Du fyller år om " + answer + " dagar";
-					break;
-			}
+        p.classList.remove("error");
 
-			p.innerHTML = message;
-		} catch (error) {
-			p.classList.add("error");
-			// Växla CSS-klass, IE10+
-			p.innerHTML = error.message;
-		}
+        try {
+            var answer = birthday(input.value)// Läser in texten från textrutan och skickar till funktionen "convertString"
+            var message;
+            switch (answer) {
+                case 0:
+                    message = "Grattis på födelsedagen!";
+                    break;
+                case 1:
+                    message = "Du fyller år imorgon!";
+                    break;
+                default:
+                    message = "Du fyller år om " + answer + " dagar";
+                    break;
+            }
 
-	});
+            p.innerHTML = message;
+        } catch (error) {
+            p.classList.add("error");
+            // Växla CSS-klass, IE10+
+            p.innerHTML = error.message;
+        }
+
+    });
 
 };

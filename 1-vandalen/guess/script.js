@@ -3,8 +3,6 @@
 window.onload = function() {
 
 	var secret = Math.floor(Math.random() * 100) + 1;
-	//var secret = 50;
-	// Detta tal behöver bytas ut mot ett slumpat tal.
 	var numberOfGuesses = 0;
 	var answer = [];
 	// I denna funktion ska du skriva koden för att hantera "spelet"
@@ -37,8 +35,6 @@ window.onload = function() {
 				return [false, "Det hemliga talet är högre"];
 			};
 		};
-
-		console.log(secret);
 
 		// Returnera exempelvis:
 		// [true, "Grattis du vann! Det hemliga talet var X och du behövde Y gissningar för att hitta det."]

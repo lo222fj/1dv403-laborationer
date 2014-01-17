@@ -112,7 +112,7 @@ var validator = {
             validateEmail(email, document.getElementById("emailHelp"))) {
                 return true;
             } else {
-                alert("Fyll i alla fält för att kunna genomföra köp");
+                alert("Alla fält måste vara korrekt ifyllda för att köp ska kunna genomföras");
                 fn.focus();
                 return false
             };

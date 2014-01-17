@@ -4,7 +4,49 @@
 var MessageBoard = {
 
 	messages : [],
+	init : function(e) {
+        /*Eventhanterare som känner av nedtryckt tangent läggs på textrutan
+         Om nedtryckt tangent är enter(13) och shift-tangenten inte är nedtryckt
+         så  anropas funktionen submitIfEnterPresses...*/
+        writeMessage.onkeydown = function(e) {
 
+            if (!e) {
+                var e = window.event;
+            }
+            if (e.keyCode === 13 && e.shiftKey === false) {
+                e.preventDefault();
+                submitIfEnterPressed();
+            }
+        };
+        //...som anropar createNewMessage
+        function submitIfEnterPressed() {
+            MessageBoard.createNewMessage();
+        }
+        //Eventhanterare på skickaknapp. Knappen tilldelas funktionen createNewMessge
+        var submit = document.getElementById("saveMessage");
+        submit.onclick = MessageBoard.createNewMessage;
+
+        MessageBoard.countMessages();
+        writeMessage.focus();
+    },
+    //Skapar meddelande av det som skrivits in i textruta, tömmer textruta och anropar renderMessage
+    createNewMessage : function() {
+        var text;
+        var message = {};
+
+        text = document.getElementById("writeMessage").value;
+        message = new Message(text, new Date());
+        //console.log(message);
+        //console.log(message.getText());
+        
+        MessageBoard.messages.push(message);
+        var textInput = document.getElementById("writeMessage");
+        textInput.value = "";
+
+        document.getElementById("writeMessage").focus();
+        //MessageBoard.renderMessages(); VÄLJ DENNA OCH KOMMATERA BORT NÄSTA RAD FÖR ATT GÅ VIA MESSAGES
+        MessageBoard.renderMessage(MessageBoard.messages.length - 1);
+    },
 	renderMessages : function() {
 		//tar bort tidigare meddelanden
 		var outputDiv = document.getElementById("messageOutput");
@@ -13,21 +55,13 @@ var MessageBoard = {
 		//loopar igenom meddelanden och anropar renderMessage för varje objekt
 		var i, counter;
 		for ( i = 0; i < MessageBoard.messages.length; i += 1) {
-
 			MessageBoard.renderMessage(i);
 		}
 		MessageBoard.countMessages();
 	},
 
-	countMessages : function() {
-		var counterDiv = document.getElementById("counter");
-
-		counterDiv.innerHTML = "Antal meddelanden: " + MessageBoard.messages.length;
-	},
-
-	//skriver ut ett meddelande
+	//skriver ut ett meddelande och anropar countMessages()
 	renderMessage : function(messageID) {
-
 		var outputDiv = document.getElementById("messageOutput");
 
 		//skapar en article som ska innehålla varje meddelande och lägger den i div för alla meddelanden
@@ -47,7 +81,7 @@ var MessageBoard = {
 
 		aClock.onclick = function() {
 			alert(MessageBoard.messages[messageID].getDateText());
-		}
+		};
 		//gör ta-bort-knapp...
 		var imgRemove = document.createElement("img");
 		imgRemove.setAttribute("src", "remove.png");
@@ -62,7 +96,7 @@ var MessageBoard = {
 		aRemove.onclick = function() {
 			if ((confirm("Vill du verkligen radera meddelandet?")) == true)
 				MessageBoard.removeMessage(messageID);
-		}
+		};
 		//skapar en p-tag med inmatad text i. Denna läggs till i meddelandet
 		var messageText = document.createElement("p");
 		messageText.innerHTML = MessageBoard.messages[messageID].getHTMLText();
@@ -76,60 +110,17 @@ var MessageBoard = {
 
 		//Lägger ut antal meddelanden
 		MessageBoard.countMessages();
-
 	},
-
+	
+    countMessages : function() {
+        var counterDiv = document.getElementById("counter");
+        counterDiv.innerHTML = "Antal meddelanden: " + MessageBoard.messages.length;
+    },
 	removeMessage : function(messageID) {
 		MessageBoard.messages.splice(messageID, 1);
 		MessageBoard.renderMessages();
-	},
-
-	init : function(e) {
-		/*Eventhanterare som känner av nedtryckt tangent läggs på textrutan
-		 Om nedtryckt tangent är enter(13) och shift-tangenten inte är nedtryckt
-		 så  anropas funktionen submitIfEnterPresses...*/
-		writeMessage.onkeydown = function(e) {
-
-			if (!e) {
-				var e = window.event;
-			};
-			if (e.keyCode == 13 && e.shiftKey == false) {
-				e.preventDefault();
-				submitIfEnterPressed();
-			}
-		}
-		//...som anropar createNewMessage
-		function submitIfEnterPressed() {
-
-			MessageBoard.createNewMessage()
-		}
-
-		//Eventhanterare på skickaknapp. Knappen tilldelas funktionen createNewMessge
-		var submit = document.getElementById("saveMessage");
-		submit.onclick = MessageBoard.createNewMessage;
-
-		MessageBoard.countMessages();
-
-		writeMessage.focus();
-	},
-	createNewMessage : function() {
-		var text;
-		var message = {};
-
-		text = document.getElementById("writeMessage").value;
-		message = new Message(text, new Date());
-		MessageBoard.messages.push(message);
-
-		var textInput = document.getElementById("writeMessage");
-		textInput.value = "";
-
-		document.getElementById("writeMessage").focus();
-		//MessageBoard.renderMessages(); VÄLJ DENNA OCH KOMMATERA BORT NÄSTA RAD FÖR ATT GÅ VIA MESSAGES
-		MessageBoard.renderMessage(MessageBoard.messages.length - 1);
-	},
-}
-
+	}	
+};
 window.onload = function() { debugger;
 	MessageBoard.init();
-
 }; 

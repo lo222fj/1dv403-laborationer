@@ -16,22 +16,17 @@ function Message(message, date) {
 		//console.log("this.setDate " + message + date + _date);
 		date = _date;
 	};
-
-	this.setText(message);
-	//console.log("anrop av this.setText " + message + date);
-	this.setDate(date);
-	//console.log("anrop av this.setDate " + message + " " + date);
 }
 
 Message.prototype.toString = function() {
 	//alert(this.date.getHours()+" "+this.date.getMinutes() +" "+this.date.getSeconds());
 	return this.getText() + " \(" + this.getDate('hh, mm, ss') + " \)";
-}
+};
 Message.prototype.getHTMLText = function() {
 	var messageText = this.getText();
 	return messageText.replace(/\n/g, '<br />');
 	//message = message.replace(/\n/g, '<br />');
-}
+};
 Message.prototype.getDateText = function(){
 	var i = this.getDate().getMonth();
 	var months = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
