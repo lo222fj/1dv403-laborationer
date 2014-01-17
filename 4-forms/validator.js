@@ -56,10 +56,11 @@ var validator = {
             var confirmationDivClose = document.createElement("span");
             confirmationDiv.appendChild(confirmationDivHeader);
 
+            //Uppgifter att bekräfta
             //Skriver ut varje par av fältnamn(span) och ifyllt värde (span) i p-tag
             var i;
             var label = document.getElementsByTagName("label");
-
+            console.log(label);
             for ( i = 0; i < label.length; i += 1) {
                 var row = document.createElement("p");
                 confirmationDiv.appendChild(row);
@@ -68,9 +69,6 @@ var validator = {
                 inputName.setAttribute("class", "labels")
 
                 var inputText = document.createTextNode(label[i].firstChild.textContent);
-                //firstChild returnerar en nod. Därför ska jag inte skapa en ny!
-                //console.log("inputName " + inputName);
-                //console.log("inputText " + inputText)
                 inputName.appendChild(inputText);
                 row.appendChild(inputName);
                 //Varje inmatat värde
@@ -85,17 +83,18 @@ var validator = {
                 console.log(form.elements[i + 1].value);
             }
             //Footer med två knappar
+            //Avbrytknapp skapas och ges eventhanterare
             var confirmationDivFooter = document.createElement("footer");
             var cancelButton = document.createElement("input");
             cancelButton.setAttribute("type", "button");
             cancelButton.setAttribute("value", "Avbryt");
             cancelButton.onclick = cancel;
-
+            //Bekräftaknapp skapas och ges eventhanterare
             var confirmButton = document.createElement("input");
             confirmButton.setAttribute("type", "button");
             confirmButton.setAttribute("value", "Bekräfta ditt köp");
             confirmButton.onclick = confirm;
-
+            //Knapparna läggs till i DOM-en
             confirmationDiv.appendChild(confirmationDivFooter);
             confirmationDivFooter.appendChild(cancelButton);
             confirmationDivFooter.appendChild(confirmButton);
@@ -122,7 +121,6 @@ var validator = {
             overlay.remove();
             var confirmationDiv = document.getElementById("confirmationDiv");
             confirmationDiv.remove();
-
             disabledFalse();
         }
         /*Egenskap som är disabled skickas inte
